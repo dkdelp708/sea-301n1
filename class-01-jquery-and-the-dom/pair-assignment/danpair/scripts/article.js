@@ -12,19 +12,19 @@ function Article (opts) {
 Article.prototype.toHtml = function() {
   var $newArticle = $('article.template').clone();
 
-$newArticle.data('category', this.category);
-$newArticle.find('time[pubdate]').attr('title', this.publishedOn);
-$newArticle.find('h1').html('this.title');
-$newArticle.find('a').text('this.author');
-$newArticle.find('a').attr('authorUrl', this.authorUrl);
-$newArticle.find('.article-body').html('this.body');
+  $newArticle.data('category', this.category);
+  $newArticle.find('time[pubdate]').attr('title', this.publishedOn);
+  $newArticle.find('h1').html(this.title);
+  $newArticle.find('a').text(this.author);
+  $newArticle.find('a').attr('href', this.authorUrl);
+  $newArticle.find('.article-body').html(this.body);
 
-  // Display the date as a relative number of "days ago":
-  
-$newArticle.find('time').html('about ' + parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000) + ' days ago')
-$newArticle.append('<hr>');
-$newArticle.removeClass('template');
-  return $newArticle;
+    // Display the date as a relative number of "days ago":
+    
+  $newArticle.find('time').html('about ' + parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000) + ' days ago')
+  $newArticle.append('<hr>');
+  $newArticle.removeClass('template');
+    return $newArticle;
 }
 
 rawData.sort(function(a,b) {
