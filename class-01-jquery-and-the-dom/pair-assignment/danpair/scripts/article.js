@@ -18,13 +18,10 @@ Article.prototype.toHtml = function() {
   $newArticle.find('a').text(this.author);
   $newArticle.find('a').attr('href', this.authorUrl);
   $newArticle.find('.article-body').html(this.body);
-
-    // Display the date as a relative number of "days ago":
-    
   $newArticle.find('time').html('about ' + parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000) + ' days ago')
   $newArticle.append('<hr>');
   $newArticle.removeClass('template');
-    return $newArticle;
+  return $newArticle;
 }
 
 rawData.sort(function(a,b) {
@@ -38,3 +35,5 @@ rawData.forEach(function(ele) {
 articles.forEach(function(a){
   $('#articles').append(a.toHtml())
 });
+
+
