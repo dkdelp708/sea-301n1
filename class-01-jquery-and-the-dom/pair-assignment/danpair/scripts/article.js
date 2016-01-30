@@ -1,31 +1,26 @@
 var articles = [];
 
 function Article (opts) {
-  this.author = opts.author;
-  this.authorUrl = opts.authorUrl;
   this.title = opts.title;
   this.category = opts.category;
-  this.body = opts.body;
+  this.author = opts.author;
+  this.authorUrl = opts.authorUrl;
   this.publishedOn = opts.publishedOn;
+  this.body = opts.body;
 }
 
 Article.prototype.toHtml = function() {
   var $newArticle = $('article.template').clone();
-  $newArticle.removeClass('template');
-  if (!this.publishedOn) {
-    $newArticle.addClass('draft');
-  }
-  $newArticle.attr('data-category', this.category);
-  $newArticle.attr('data-author', this.author);
 
-  $newArticle.find('.byline a').html(this.author);
-  $newArticle.find('.byline a').attr('href', this.authorUrl);
-  $newArticle.find('h1:first').html(this.title);
+  $newArticle.data('category', this.category);
+  $newArticle.find('time[pubdate]').attr('title', this.publishedOn);
+  $newArticle.find('h1').html(this.title);
+  $newArticle.find('a').text(this.author);
+  $newArticle.find('a').attr('href', this.authorUrl);
   $newArticle.find('.article-body').html(this.body);
-  $newArticle.find('time[pubdate]').attr('datetime', this.publishedOn)
-  $newArticle.find('time[pubdate]').attr('title', this.publishedOn)
   $newArticle.find('time').html('about ' + parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000) + ' days ago')
   $newArticle.append('<hr>');
+  $newArticle.removeClass('template');
   return $newArticle;
 }
 
@@ -40,3 +35,5 @@ rawData.forEach(function(ele) {
 articles.forEach(function(a){
   $('#articles').append(a.toHtml())
 });
+
+
